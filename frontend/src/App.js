@@ -4,7 +4,7 @@ import Axios from 'axios';
 
 
 // components 
-import { DashboardCard } from './components';
+import { DashboardCard, RePieChart } from './components';
 
 // MUI 
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const piData = [];
 const endPoint = 'http://localhost:4000/stats/all';
 function App() {
 
@@ -25,6 +26,8 @@ function App() {
   const [total, setTotal]=useState({});
   const [male, setMale]=useState({});
   const [female, setFemale]=useState({});
+  
+  
 
   useEffect(() => {
     (
@@ -48,6 +51,10 @@ function App() {
           Axios.get(`${endPoint}?${maleArray.join('^')}`)
           .then(response =>{
             setMale(response.data);
+            piData.push({
+              name:"Male",
+              value: response.data.count
+            });
           })
           .catch(err => {
             console.log('Axios Error = ', err);
@@ -57,6 +64,10 @@ function App() {
           Axios.get(`${endPoint}?${femaleArray.join('^')}`)
           .then(response =>{
             setFemale(response.data);
+            piData.push({
+              name:"Female",
+              value: response.data.count
+            });
           })
           .catch(err => {
             console.log('Axios Error = ', err);
@@ -68,6 +79,7 @@ function App() {
       }
     )()
   },[]);
+  
   return (
     <div className={classes.mainContainer}>
       <Grid container spacing={2}>
@@ -93,6 +105,15 @@ function App() {
           />
         </Grid>
       </Grid>
+
+      {
+        piData && piData.length >0 && (
+          <Grid container spacing={2}>
+            <RePieChart data={piData} />
+          </Grid>
+        )
+      }
+      
     </div>
   );
 }
