@@ -8,7 +8,7 @@ console.log('config =', config);
 
 seeder({
     imports:[
-        MongooseModule.forRoot('mongodb://admin:admin@localhost:27017/nestjs-react-pagination?authSource=admin'),
+        MongooseModule.forRoot('mongodb://admin:admin@localhost:27017/react-dashboard-nestjs?authSource=admin'),
         MongooseModule.forFeature([{
             name: User.name,
             schema: UserSchema

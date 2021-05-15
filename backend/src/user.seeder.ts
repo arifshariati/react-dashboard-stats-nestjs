@@ -10,7 +10,7 @@ export class UserSeeder implements Seeder{
     ){}
     
     seed(): Promise<any> {
-        const users = DataFactory.createForClass(User).generate(50) as any;
+        const users = DataFactory.createForClass(User).generate(1300) as any;
         return this.userModel.insertMany(users);
     }
 
